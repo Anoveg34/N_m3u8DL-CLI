@@ -7,14 +7,17 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4  # 更新到最新稳定版
+    - uses: actions/checkout@v4
       name: Checkout Code
     
     - name: Setup MSBuild Path
-      uses: warrenbuckley/Setup-MSBuild@v2  # 更新到v2版本，不再需要不安全命令
+      uses: warrenbuckley/Setup-MSBuild@v1.2.0  # 使用该Action的最新具体版本
+      # 保留环境变量以确保兼容性
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@v2  # 更新到最新稳定版
+      uses: NuGet/setup-nuget@v2
       
     - name: Restore NuGet Packages
       run: nuget restore N_m3u8DL-CLI.sln
@@ -23,9 +26,8 @@ jobs:
       run: msbuild N_m3u8DL-CLI.sln /p:Configuration=Release /p:DebugSymbols=false /p:DebugType=None
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v4  # 使用最新的v4版本
+      uses: actions/upload-artifact@v4
       with:
         name: N_m3u8DL-CLI_latest
         path: N_m3u8DL-CLI\bin\Release\N_m3u8DL-CLI.exe
-        # v4版本默认会保留文件权限，如需兼容可添加以下配置（可选）
-        if-no-files-found: error  # 没有找到文件时抛出错误（默认行为）
+        if-no-files-found: error
