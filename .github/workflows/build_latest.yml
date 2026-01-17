@@ -11,7 +11,7 @@ jobs:
       name: Checkout Code
     
     - name: Setup MSBuild Path
-      uses: warrenbuckley/Setup-MSBuild@v1.2.0  # 使用该Action的最新具体版本
+      uses: warrenbuckley/Setup-MSBuild@v1  # 使用该Action的最新具体版本
       # 保留环境变量以确保兼容性
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
